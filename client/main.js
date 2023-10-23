@@ -10,7 +10,7 @@ const getCompliment = () => {
 
 complimentBtn.addEventListener('click', getCompliment)
 
-const fortuneBtn = document.getElementById("fortuneButton")
+const fortuneRandomBtn = document.getElementById("fortuneRandomButton")
 
 const getFortune = () => {
     axios.get("http://localhost:4000/api/fortune/")
@@ -20,7 +20,21 @@ const getFortune = () => {
     });
 };
 
-fortuneBtn.addEventListener('click', getFortune)
+fortuneRandomBtn.addEventListener('click', getFortune)
+
+const fortuneIdBtn = document.getElementById("fortuneIdButton")
+
+const getFortuneById = () => {
+    let id = prompt("Enter a fortune id:");
+    
+    axios.post("http://localhost:4000/api/fortuneID/", { id })
+        .then(res => {
+            //const data = res.data;
+            alert(`"${res.data}"`);
+    });
+}
+
+fortuneIdBtn.addEventListener('click', getFortuneById)
 
 const addFortuneBtn = document.getElementById("addFortuneButton")
 
@@ -29,8 +43,8 @@ const addFortune = () => {
 
     axios.post("http://localhost:4000/api/fortune/", { newFortune })
         .then(res => {
-            const data = res.data;
-            alert(`"${newFortune}" has been added to the fortune list`);
+            //const data = res.data;
+            alert(`"${newFortune}" has been added to the fortune list with the id of ` + res.data.id);
         })
 };
 

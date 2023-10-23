@@ -12,7 +12,7 @@ module.exports = {
         res.status(200).send(randomCompliment);
     },
 
-    getFortune: (req, res) => {
+    getRandomFortune: (req, res) => {
         
         let randomIndex = Math.floor(Math.random() * fortuneDB.length);
         let randomFortune = fortuneDB[randomIndex].fortune;
@@ -20,10 +20,15 @@ module.exports = {
 
         res.status(200).send(randomFortune);
     },
+    getIDFortune: (req, res) => {
+        let { id } = req.body;
+        let fortune = fortuneDB[(id-1)].fortune;
+        res.status(200).send(fortune);
+    },
 
     addFortune: (req, res) => {
         let { newFortune } = req.body;
-        newFortune = { fortune: newFortune };
+        newFortune = {id: fortuneDB.length + 1, fortune: newFortune };
         
         fortuneDB.push(newFortune);
         console.log(fortuneDB);
