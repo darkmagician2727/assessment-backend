@@ -11,7 +11,7 @@ module.exports = {
     },
 
     getFortune: (req, res) => {
-        const fortunes = ["Gee, you're a smart cookie!", "Cool shirt!", "Your Javascript skills are stellar."];
+        const fortunes = ["Fortune 1", "Fortune 2", "Fortune 3"];
       
         // choose random compliment
         let randomIndex = Math.floor(Math.random() * fortunes.length);
