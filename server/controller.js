@@ -1,4 +1,5 @@
 const fortuneDB = require('./fortuneDB.json');
+let index = 0;
 
 module.exports = {
 
@@ -21,18 +22,41 @@ module.exports = {
         res.status(200).send(randomFortune);
     },
     getIDFortune: (req, res) => {
-        let { id } = req.body;
-        let fortune = fortuneDB[(id-1)].fortune;
+        const id = req.body.id
+
+        const index = fortuneDB.findIndex(fortune => fortune.id === Number(id));
+ 
+        let fortune = fortuneDB[index].fortune;
+        
         res.status(200).send(fortune);
     },
 
     addFortune: (req, res) => {
         let { newFortune } = req.body;
-        newFortune = {id: fortuneDB.length + 1, fortune: newFortune };
+        index = fortuneDB[fortuneDB.length - 1].id + 1
+        console.log(index);
+        newFortune = {id: index, fortune: newFortune };
         
         fortuneDB.push(newFortune);
         console.log(fortuneDB);
         res.status(200).send(newFortune);
-    }
+    },
 
+    deleteFortune: (req, res) => {
+        const id = parseInt(req.params.id);
+
+        // Find index of the fortune with the given id
+        const index = fortuneDB.findIndex(fortune => fortune.id === id);
+
+        if (index !== -1) {
+            // Remove the fortune from the array
+            fortuneDB.splice(index, 1);
+            res.sendStatus(200);
+        } else {
+            alert("Invalid fortune id");
+            res.sendStatus(404);
+        }
+        console.log(fortuneDB);
+
+        }
 }

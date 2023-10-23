@@ -49,3 +49,17 @@ const addFortune = () => {
 };
 
 addFortuneBtn.addEventListener('click', addFortune)
+
+const deleteFortuneBtn = document.getElementById("fortuneDeleteButton")
+
+const deleteFortune = () => {
+    let id = prompt("Enter a id to delete:"); // Get the id to delete from user input
+
+    axios.delete(`http://localhost:4000/api/fortune/${id}`)
+        .then(res => {
+            const data = res.data;
+            alert(`Fortune with id ${id} has been deleted`);
+        }) 
+};
+
+deleteFortuneBtn.addEventListener('click', deleteFortune)
