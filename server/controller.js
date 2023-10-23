@@ -1,3 +1,5 @@
+const fortuneDB = require('./fortuneDB.json');
+
 module.exports = {
 
     getCompliment: (req, res) => {
@@ -11,13 +13,21 @@ module.exports = {
     },
 
     getFortune: (req, res) => {
-        const fortunes = ["Fortune 1", "Fortune 2", "Fortune 3"];
-      
-        // choose random compliment
-        let randomIndex = Math.floor(Math.random() * fortunes.length);
-        let randomFortune = fortunes[randomIndex];
-      
+        
+        let randomIndex = Math.floor(Math.random() * fortuneDB.length);
+        let randomFortune = fortuneDB[randomIndex].fortune;
+        //console.log(randomFortune);
+
         res.status(200).send(randomFortune);
+    },
+
+    addFortune: (req, res) => {
+        let { newFortune } = req.body;
+        newFortune = { fortune: newFortune };
+        
+        fortuneDB.push(newFortune);
+        console.log(fortuneDB);
+        res.status(200).send(newFortune);
     }
 
 }
