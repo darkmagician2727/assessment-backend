@@ -75,6 +75,6 @@ module.exports = {
         else {
             res.sendStatus(404);
         }
-        console.log(fortuneDB)
+        // console.log(fortuneDB)
     }
 }
