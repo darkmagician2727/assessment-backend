@@ -25,20 +25,23 @@ module.exports = {
         const id = req.body.id
 
         const index = fortuneDB.findIndex(fortune => fortune.id === Number(id));
- 
-        let fortune = fortuneDB[index].fortune;
-        
-        res.status(200).send(fortune);
+        if (index === -1) {
+            res.sendStatus(404)
+        }
+        else {
+            let fortune = fortuneDB[index].fortune;
+            res.status(200).send(fortune)
+        }
     },
 
     addFortune: (req, res) => {
         let { newFortune } = req.body;
         index = fortuneDB[fortuneDB.length - 1].id + 1
-        console.log(index);
+        // console.log(index);
         newFortune = {id: index, fortune: newFortune };
         
         fortuneDB.push(newFortune);
-        console.log(fortuneDB);
+        // console.log(fortuneDB);
         res.status(200).send(newFortune);
     },
 
@@ -53,10 +56,25 @@ module.exports = {
             fortuneDB.splice(index, 1);
             res.sendStatus(200);
         } else {
-            alert("Invalid fortune id");
             res.sendStatus(404);
         }
-        console.log(fortuneDB);
+        // console.log(fortuneDB);
+        },
+    updateFortune: (req, res) => {
+        const id = parseInt(req.params.id);
+        const { newFortune } = req.body;
 
+        // Find the fortune with the given id
+        const index = fortuneDB.findIndex(fortune => fortune.id === id);
+
+        if (index !== -1) {
+            // Update the newFortune in the array
+            fortuneDB[index].fortune = newFortune;
+            res.sendStatus(200);
         }
+        else {
+            res.sendStatus(404);
+        }
+        console.log(fortuneDB)
+    }
 }
